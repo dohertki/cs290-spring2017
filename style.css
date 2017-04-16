@@ -5,12 +5,12 @@ body{
 }
 
 
-
-table{
-    width: 50%;
+/*---Table Style---*/
+table, th, td {
+    width: 600px;
     border: 2px solid black;
     margin: 0;
-    border-collapse: collapse;
+   /* border-collapse: collapse; */
 
 }
 
@@ -21,20 +21,23 @@ td{
 tbody > tr:nth-child(even) {background: lightgreen}
 tbody > tr:nth-child(odd) {background: lightblue}
 
+tbody th{
+    font-weight: normal;
+    font-style: italic;
+    width:20px;
+}
 
+/*---List Style---*/
 
-
-
-
+dt{
+    font-weight: bold;
+}
 
 
 .outer-content{
-/*  float:left; 
-  display:block;*/ 
   margin-top:20px;
   padding: 1px; 
   background: pink;
- /* height:60px; */
   width: 75%;
 
 }
@@ -50,7 +53,6 @@ tbody > tr:nth-child(odd) {background: lightblue}
 
 form{
     margin-top: 10px;
-    border: solid 2px;
     padding: 5px;
 }
 form p{
