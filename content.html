@@ -12,84 +12,77 @@
   <h1> CS290-week2</h1>
 
     
-
+  <!---Table--->
   <table>
-
-   <tr>
-    <th> </th>
-    <th scope="col"> one</th>
-    <th scope="col"> two</th>
-    <th scope="col"> two</th>
-    <th scope="col"> two</th>
-    <th scope="col"> two</th>
-    <th scope="col"> two</th>
-   </tr>
-   
-   <tr>
-    <th scope="row"> row </th>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td>e</td>
-    <td>f</td>
-   </tr>
-
-   <tr>
-    <th scope="row"> row </th>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td>e</td>
-    <td>f</td>
-   </tr>
-   <tr>
-    <th scope="row"> row </th>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td>e</td>
-    <td>f</td>
-   </tr>
-   <tr>
-    <th scope="row"> row </th>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td>e</td>
-    <td>f</td>
-   </tr>
-   <tr>
-    <th scope="row"> row </th>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td>e</td>
-    <td>f</td>
-   </tr>
-   <tr>
-    <th scope="row"> row </th>
-    <td>a</td>
-    <td>b</td>
-    <td>c</td>
-    <td>d</td>
-    <td>e</td>
-    <td>f</td>
-   </tr>
+   <caption> Hoody do </caption>
+   <thead>
+    <tr>
+     <th> </th>
+     <th scope="col"> JAN</th>
+     <th scope="col"> FEB</th>
+     <th scope="col"> MAR</th>
+     <th scope="col"> APR</th>
+     <th scope="col"> MAY</th>
+    </tr>
+   </thead>
+   <tbody>
+    <tr>
+     <th scope="row"> Sunrise </th>
+     <td>a</td>
+     <td>b</td>
+     <td>c</td>
+     <td>d</td>
+     <td>e</td>
+    </tr>
+    <tr>
+     <th scope="row"> Sunset </th>
+     <td>a</td>
+     <td>a</td>
+     <td>b</td>
+     <td>c</td>
+     <td>d</td>
+    </tr>
+    <tr>
+     <th scope="row"> Highest Tide </th>
+     <td>a</td>
+     <td>b</td>
+     <td>c</td>
+     <td>d</td>
+     <td>e</td>
+    </tr>
+    <tr>
+     <th scope="row"> Lowest Tide </th>
+     <td>a</td>
+     <td>b</td>
+     <td>c</td>
+     <td>d</td>
+     <td>e</td>
+    </tr>
+    <tr>
+     <th scope="row"> Full Moon </th>
+     <td>a</td>
+     <td>b</td>
+     <td>c</td>
+     <td>d</td>
+     <td>e</td>
+    </tr>
+   </tbody>
+   <tfoot>
+    <tr>
+     <td colspan="2">footer 1</td>
+     <td colspan="4">footer 2</td>
+    </tr>
+   </tfoot>
 
   </table>
  
   <! List >
-  <ul>
-   <h2> Triple Crown</h2>
-   <li> Le Mans</li>
-   <li> Sebring</li>
-   <li> Daytona</li>
-  </ul> 
+  <dl>
+   <dt> Triple Crown</dt>
+   <dd> Le Mans</li>
+   <dd> Sebring</li>
+   <dd> Daytona</li>
+  </dl> 
 
   <! Box >
   <div class="outer-content">
@@ -103,33 +96,66 @@
 
 
 
-  <! forms>
+  <! forms -POST>
   <form>
-   <p>Text Here:
-    <input type="text" name="text_input" />
-   </p>
-
-   <p>Number here:
-    <input type="number" name="numerical_input" />
-   </p>
-  
-   <p>Password here:
-    <input type="password" name="password_input" />
-   </p>
-
-
-   <form action ="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="post">
-    <p> Select between 
-     <br>
-     <input type="radio" name="candy" value="Snickers"/> Snickers
-     <br>
-     <input type="radio" name="candy" value="Skittles"/> Skittles
-     <br>
-     <input type="radio" name="candy" value="Mentos"/> Mentos
+   <fieldset>
+    <legend> Form POST </legend> 
+    <p>Text Here:
+     <input type="text" name="text_input" />
     </p>
-   <input type="submit" name="submit"> 
+
+    <p>Number here:
+     <input type="number" name="numerical_input" />
+    </p>
+  
+    <p>Password here:
+     <input type="password" name="password_input" />
+    </p>
+
+
+    <form action ="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="post">
+     <p> Select between 
+      <br>
+      <input type="radio" name="candy" value="Snickers"/> Snickers
+      <br>
+      <input type="radio" name="candy" value="Skittles"/> Skittles
+      <br>
+      <input type="radio" name="candy" value="Mentos"/> Mentos
+     </p>
+    <input type="submit" name="submit"> 
+   </fieldset>
   </form>
 
+
+  <! forms -GET>
+  <form>
+   <fieldset>
+    <legend> Form GET </legend> 
+    <p>Text Here:
+     <input type="text" name="text_input" />
+    </p>
+
+    <p>Number here:
+     <input type="number" name="numerical_input" />
+    </p>
+  
+    <p>Password here:
+     <input type="password" name="password_input" />
+    </p>
+
+
+    <form action ="http://classes.engr.oregonstate.edu/eecs/winter2015/cs290-400/tools/class-content/form_tests/check_request.php" method="get">
+     <p> Select between 
+      <br>
+      <input type="radio" name="candy" value="Snickers"/> Snickers
+      <br>
+      <input type="radio" name="candy" value="Skittles"/> Skittles
+      <br>
+      <input type="radio" name="candy" value="Mentos"/> Mentos
+     </p>
+    <input type="submit" name="submit"> 
+   </fieldset>
+  </form>
 
 
   </body>
