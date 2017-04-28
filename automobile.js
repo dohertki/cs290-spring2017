@@ -24,7 +24,7 @@ var automobiles = [
   and it will return a new array which is sorted with the largest object
   in index 0 and the smallest in the last index*/
 function sortArr( comparator, array ){
-    /*your code here*/
+    return array.sort(comparator); /*your code here*/
 }
 
 /*A comparator takes two arguments and uses some algorithm to compare
@@ -47,6 +47,7 @@ function exComparator( int1, int2){
   "greater" than older cars.*/
 function yearComparator( auto1, auto2){
     /* your code here*/
+    return auto1.year - auto2.year;
 }
 
 /*This compares two automobiles based on their make. It should be case 
@@ -54,6 +55,12 @@ function yearComparator( auto1, auto2){
   are "greater" than ones that come later.*/
 function makeComparator( auto1, auto2){
     /* your code here*/
+    if(auto1 < auto2)
+        return -1;
+    if(auto1 > auto2)
+        return 1;
+    else
+        return 0;
 }
 
 /*This compares two automobiles based on their type. The ordering from 
@@ -63,6 +70,12 @@ function makeComparator( auto1, auto2){
   considered "greater".*/
 function typeComparator( auto1, auto2){
     /* your code here*/
+    if(auto1 < auto)
+        return -1;
+    if(auto1[index].type > auto[index].type)
+        return 1;
+    else
+        return 0;
 }
 
 /*Your program should output the following to the console.log, including 
@@ -97,12 +110,26 @@ The cars sorted by type are:
 
 As an example of the content in the parenthesis:
 1990 Ford F-150 */
-automobiles.forEach(function(element) {
-    console.log(element);
-    });
+automobiles.forEach(function (element, index, array){ 
+                    console.log(automobiles[index].year + "  " +
+                    automobiles[index].make + "  " + 
+                    automobiles[index].model + "  " + 
+                    automobiles[index].type)});
+
 console.log("*****");
 
+//console.log(sortArr(yearComparator(auto1,auto2),automobiles));
+automobiles.sort();
+
+automobiles.forEach(function (element, index,( automobiles.sort())){ 
+                    console.log(automobiles[index].year + "  " +
+                    automobiles[index].make + "  " + 
+                    automobiles[index].model + "  " + 
+                    automobiles[index].type)});
+
 console.log("The cars sorted by type are:");
+
+
 console.log("The cars sorted by year are:");
 console.log("The cars sorted by make are:");
 console.log(automobiles[0].make);
