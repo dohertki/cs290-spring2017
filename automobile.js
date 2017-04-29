@@ -15,9 +15,28 @@ var automobiles = [
     ];
 
 
+var copycat = automobiles.slice();
+console.log(copycat.length + "  " + copycat[0].model);
+
+var test = [];
+
+    test.push(automobiles.filter(function(auto){
+
+        return auto.type == "Roadster";
+        }));
+
+    test.push(automobiles.filter(function(auto){
+        return auto.type == "Pickup";
+    }));
+    test.push(automobiles.filter(function(auto){
+        return auto.type == "SUV";
+    }));
+    test.push(automobiles.filter(function(auto){
+        return auto.type == "Wagon";
+    }));
 
 
-
+console.log(test.length);
 
 /*This function sorts arrays using an arbitrary comparator. You pass
   it a comparator and an array of objects appropriate for that comparator
@@ -45,19 +64,21 @@ function exComparator( int1, int2){
 
 /*This compares two automobiles based on their year. Newer cars are 
   "greater" than older cars.*/
-function yearComparator( auto1, auto2){
+function yearComparator(auto1, auto2){
     /* your code here*/
-    return auto1.year - auto2.year;
+    return auto2.year - auto1.year;
 }
+
+console.log(yearComparator(automobiles[1], automobiles[2]));
 
 /*This compares two automobiles based on their make. It should be case 
   insensitive and makes which are alphabetically earlier in the alphabet 
   are "greater" than ones that come later.*/
 function makeComparator( auto1, auto2){
     /* your code here*/
-    if(auto1 < auto2)
+    if(auto1.make.toUpperCase() < auto2.make.toUpperCase())
         return -1;
-    if(auto1 > auto2)
+    if(auto1.make.toUpperCase() > auto2.make.toUpperCase())
         return 1;
     else
         return 0;
@@ -96,10 +117,11 @@ The cars sorted by year are:
 (year make model of the 'greatest' car)
 (...)
 (year make model of the 'least' car)
+*/
 
-The cars sorted by make are:
-(year make model of the 'greatest' car)
-(...)
+//(year make model of the 'greatest' car)
+//(...)
+/*
 (year make model of the 'least' car)
 
 The cars sorted by type are:
@@ -110,27 +132,24 @@ The cars sorted by type are:
 
 As an example of the content in the parenthesis:
 1990 Ford F-150 */
+
+console.log("*****");
+console.log("The cars sorted by type are:");
+
+
+console.log("\nThe cars sorted by year are:");
+sortArr(yearComparator, automobiles);
+
 automobiles.forEach(function (element, index, array){ 
                     console.log(automobiles[index].year + "  " +
                     automobiles[index].make + "  " + 
                     automobiles[index].model + "  " + 
                     automobiles[index].type)});
-
-console.log("*****");
-
-//console.log(sortArr(yearComparator(auto1,auto2),automobiles));
-automobiles.sort();
-
-automobiles.forEach(function (element, index,( automobiles.sort())){ 
+console.log("\nThe cars sorted by make are:");
+sortArr(makeComparator,automobiles);
+automobiles.forEach(function (element, index, array){ 
                     console.log(automobiles[index].year + "  " +
                     automobiles[index].make + "  " + 
                     automobiles[index].model + "  " + 
                     automobiles[index].type)});
-
-console.log("The cars sorted by type are:");
-
-
-console.log("The cars sorted by year are:");
-console.log("The cars sorted by make are:");
-console.log(automobiles[0].make);
 console.log("*****");
