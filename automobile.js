@@ -1,3 +1,7 @@
+
+
+
+
 function Automobile( year, make, model, type ){
     this.year = year; //integer (ex. 2001, 1995)
     this.make = make; //string (ex. Honda, Ford)
@@ -18,25 +22,7 @@ var automobiles = [
 var copycat = automobiles.slice();
 console.log(copycat.length + "  " + copycat[0].model);
 
-var test = [];
 
-    test.push(automobiles.filter(function(auto){
-
-        return auto.type == "Roadster";
-        }));
-
-    test.push(automobiles.filter(function(auto){
-        return auto.type == "Pickup";
-    }));
-    test.push(automobiles.filter(function(auto){
-        return auto.type == "SUV";
-    }));
-    test.push(automobiles.filter(function(auto){
-        return auto.type == "Wagon";
-    }));
-
-
-console.log(test.length);
 
 /*This function sorts arrays using an arbitrary comparator. You pass
   it a comparator and an array of objects appropriate for that comparator
@@ -91,13 +77,34 @@ function makeComparator( auto1, auto2){
   considered "greater".*/
 function typeComparator( auto1, auto2){
     /* your code here*/
-    if(auto1 < auto)
+    var types = ["Wagon","SUV", "Pickup", "Roadster"];
+    var score1 = 0;
+    var score2 = 0;
+    for(var i = 0; i < types.length; i++){
+
+        if(auto1.type == types[i])
+            score1 = i;
+            
+        if(auto2.type == types[i])
+            score2 = i;
+
+    
+    }
+    if(score1 == score2){
+        if(auto1.year < auto2.year)
+            return 1;
+        else
+            return -1;
+    }
+
+    if(score1 > score2)
         return -1;
-    if(auto1[index].type > auto[index].type)
+    if(score1 < score2)
         return 1;
-    else
-        return 0;
+
 }
+
+
 
 /*Your program should output the following to the console.log, including 
   the opening and closing 5 stars. All values in parenthesis should be 
@@ -144,8 +151,14 @@ automobiles.forEach(function (element, index, array){
 The cars sorted by type are:
 (year make model type of the 'greatest' car)
 */
-console.log("The cars sorted by type are:");
+console.log("\nThe cars sorted by type are:");
 
+sortArr(typeComparator,automobiles);
+automobiles.forEach(function (element, index, array){ 
+                    console.log(automobiles[index].year + "  " +
+                    automobiles[index].make + "  " + 
+                    automobiles[index].model + "  " + 
+                    automobiles[index].type)});
 
 
 /*
