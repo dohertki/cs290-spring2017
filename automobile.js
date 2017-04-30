@@ -115,36 +115,22 @@ function typeComparator( auto1, auto2){
 *****
 The cars sorted by year are:
 (year make model of the 'greatest' car)
-(...)
-(year make model of the 'least' car)
-*/
-
-//(year make model of the 'greatest' car)
-//(...)
-/*
-(year make model of the 'least' car)
-
-The cars sorted by type are:
-(year make model type of the 'greatest' car)
-(...)
-(year make model type of the 'least' car)
-*****
-
-As an example of the content in the parenthesis:
-1990 Ford F-150 */
-
-console.log("*****");
-console.log("The cars sorted by type are:");
-
-
 console.log("\nThe cars sorted by year are:");
 sortArr(yearComparator, automobiles);
+*/
 
 automobiles.forEach(function (element, index, array){ 
                     console.log(automobiles[index].year + "  " +
                     automobiles[index].make + "  " + 
                     automobiles[index].model + "  " + 
                     automobiles[index].type)});
+
+/*
+(year make model of the 'least' car)
+
+The cars sorted by make are:
+(year make model of the 'greatest' car)
+*/
 console.log("\nThe cars sorted by make are:");
 sortArr(makeComparator,automobiles);
 automobiles.forEach(function (element, index, array){ 
@@ -152,4 +138,21 @@ automobiles.forEach(function (element, index, array){
                     automobiles[index].make + "  " + 
                     automobiles[index].model + "  " + 
                     automobiles[index].type)});
-console.log("*****");
+/*
+(year make model of the 'least' car)
+
+The cars sorted by type are:
+(year make model type of the 'greatest' car)
+*/
+console.log("The cars sorted by type are:");
+
+
+
+/*
+(year make model type of the 'least' car)
+
+As an example of the content in the parenthesis:
+1990 Ford F-150 */
+
+
+
