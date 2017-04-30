@@ -1,4 +1,4 @@
-
+//https://j11y.io/javascript/deep-copying-of-objects-and-arrays/onsole.log(test.length);
 
 
 
