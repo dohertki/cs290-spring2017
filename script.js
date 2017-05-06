@@ -1,4 +1,4 @@
-
+/*
 var hi;
 
 var newList = document.createElement("ul");
@@ -7,7 +7,7 @@ for(var i = 0; i < 3; i++){
     newItem.textContent = "I am item " + i + ".";
     newList.appendChild(newItem);
 }
-
+*/
 
 var newTable = document.createElement("table");
     newTable.style.border = "thick solid black";
@@ -35,6 +35,14 @@ for(var y = 0; y < 4; y++){
 
     }
 }
-document.body.innerHTML = '<div id="mytable">boo!</div>'
-document.getElementById("mytable").appendChild(newTable);
+var newButton = document.createElement("button");
+var tb = document.createTextNode("Click Me");
+newButton.appendChild(tb);
 
+document.body.innerHTML = '<div id="mytable">boo!</div> <div id="mybutton"></div>'
+document.getElementById("mytable").appendChild(newTable);
+document.getElementById("mybutton").appendChild(newButton);
+//var el = document.getElementsByTagName("button");
+//el.onclick = function(){alert("click")};
+var button = document.querySelector("button");
+button.addEventListener("click", function(){ alert("HI")});
