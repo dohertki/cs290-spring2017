@@ -2,9 +2,8 @@
   Kierin Doherty(dohertki)
   CS290-week 5   
   7 Apr 2017
-
-
 */
+
 
 var newTable = document.createElement("table");
     newTable.style.border = "thick solid black";
@@ -35,13 +34,31 @@ for(var y = 0; y < 4; y++){
 /*Make an element with a button*/
 var newButton = document.createElement("button");
 var tb = document.createTextNode("Mark Cell");
+var upButton    = document.createElement("button");
+var downButton  = document.createElement("button");
+var rightButton = document.createElement("button");
+var leftButton  = document.createElement("button");
+
+
+var ub = document.createTextNode("  up   ");
+var db = document.createTextNode(" down  ");
+var rb = document.createTextNode(" right ");
+var lb = document.createTextNode(" left  ");
+
+
+
+
 newButton.appendChild(tb);
+
+upButton.appendChild(ub);
+
+
 
 /*Place the table and the button into the webpage */
 document.body.innerHTML = '<div id="mytable">Use Arrow keys to change cells </div><div id="mybutton"></div>'
 document.getElementById("mytable").appendChild(newTable);
 document.getElementById("mybutton").appendChild(newButton);
-
+document.getElementById("mybutton").appendChild(upButton);
 
 //UP key pressed
 // Code referenced @ https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Key_names_and_Char_values
@@ -55,9 +72,9 @@ function shiftCell(side, vert){
             currentBox.style.border = "thick solid black";
 
 
-
-
 }
+
+
 
 function handler(){
 
@@ -116,7 +133,7 @@ var currentRow = tableRow[r_pos];
 //BOX OUT
 
 var button = document.querySelector("button");
-button.addEventListener("click", function(){currentBox.style.backgroundColor = 'red'});
+button.addEventListener("click", function(){currentBox.style.backgroundColor = 'yellow'});
 
 
 
