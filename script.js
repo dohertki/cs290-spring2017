@@ -1,12 +1,9 @@
 /*
-var hi;
+  Kierin Doherty(dohertki)
+  CS290-week 5   
+  7 Apr 2017
 
-var newList = document.createElement("ul");
-for(var i = 0; i < 3; i++){
-    var newItem = document.createElement("li");
-    newItem.textContent = "I am item " + i + ".";
-    newList.appendChild(newItem);
-}
+
 */
 
 var newTable = document.createElement("table");
@@ -20,12 +17,10 @@ for(var y = 0; y < 4; y++){
     for(var x = 1; x <= 4; x ++){
         if(y === 0){
             var newCell = document.createElement("th");
-            //newCell.textContent = "Here I am";
             var t = document.createTextNode("Header" + x );
         }
         else{
             var newCell = document.createElement("td");
-            //newCell.textContent = "Here I am";
             var t = document.createTextNode(x + "," + y);
 
         }
@@ -35,14 +30,118 @@ for(var y = 0; y < 4; y++){
 
     }
 }
+
+
+/*Make an element with a button*/
 var newButton = document.createElement("button");
-var tb = document.createTextNode("Click Me");
+var tb = document.createTextNode("Mark Cell");
 newButton.appendChild(tb);
 
-document.body.innerHTML = '<div id="mytable">boo!</div> <div id="mybutton"></div>'
+/*Place the table and the button into the webpage */
+document.body.innerHTML = '<div id="mytable">Use Arrow keys to change cells </div><div id="mybutton"></div>'
 document.getElementById("mytable").appendChild(newTable);
 document.getElementById("mybutton").appendChild(newButton);
-//var el = document.getElementsByTagName("button");
-//el.onclick = function(){alert("click")};
+
+
+//UP key pressed
+// Code referenced @ https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Key_names_and_Char_values
+function shiftCell(side, vert){
+
+            currentBox.style.border = "none";
+            pos = pos + side ;
+            r_pos = r_pos + vert;
+            currentBox = tableBox[pos];
+            currentRow = tableRow[r_pos];
+            currentBox.style.border = "thick solid black";
+
+
+
+
+}
+
+function handler(){
+
+   var keyName = event.key;
+   console.log( event.key);
+    console.log("Is first child in row? ");
+    console.log( currentRow.firstChild == currentBox);
+  
+    if(keyName === 'ArrowUp'){
+       if(currentRow.previousSibling.previousSibling != null){
+            shiftCell( -4, -1); 
+        }
+    }
+
+
+    if(keyName === 'ArrowDown'){
+       if(currentRow.nextSibling != null){
+            shiftCell( 4, 1);          
+        }
+    }
+    
+    if(keyName === 'ArrowRight'){
+       if(currentBox.nextSibling != null){
+           shiftCell( 1, 0);
+        }
+    }
+    
+    if(keyName === 'ArrowLeft'){
+       if(currentRow.firstChild != currentBox){
+           shiftCell( -1, 0);
+        }
+    }
+
+    document.removeEventListener('keydown', handler);
+
+}
+
+
+
+document.addEventListener( 'keydown', handler, false);    
+
+var tableBox = document.querySelectorAll("td");
+var pos = 0;
+var r_pos = 1;
+var currentBox = tableBox[pos];
+currentBox.style.backgroundColor = 'blue';
+currentBox.style.border = "thick solid black";
+
+var tableRow = document.querySelectorAll("tr");
+
+var currentRow = tableRow[r_pos];
+
+
+
+
+//BOX OUT
+
 var button = document.querySelector("button");
-button.addEventListener("click", function(){ alert("HI")});
+button.addEventListener("click", function(){currentBox.style.backgroundColor = 'red'});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
