@@ -4,9 +4,15 @@
   7 Apr 2017
 */
 
+/*Create a <div> for the table and a <div> for the buttons in the <body>*/
+document.body.innerHTML = '<div id="mytable">Use Arrow keys to change cells </div><div id="mybutton"></div>'
 
+
+
+/*Create the table*/
 var newTable = document.createElement("table");
-    newTable.style.border = "thick solid black";
+newTable.style.border = "thick solid black";
+
 for(var y = 0; y < 4; y++){
 	var newRow = document.createElement("tr");
     newRow.style.backgroundColor = 'orange';
@@ -30,40 +36,39 @@ for(var y = 0; y < 4; y++){
     }
 }
 
+/*Place the table and the button into the webpage */
+document.getElementById("mytable").appendChild(newTable);
 
-/*Make an element with a button*/
+/*Create the buttons and plave them in <div>*/
 var newButton = document.createElement("button");
 var tb = document.createTextNode("Mark Cell");
-var upButton    = document.createElement("button");
-var downButton  = document.createElement("button");
-var rightButton = document.createElement("button");
-var leftButton  = document.createElement("button");
-
-
-var ub = document.createTextNode("  up   ");
-var db = document.createTextNode(" down  ");
-var rb = document.createTextNode(" right ");
-var lb = document.createTextNode(" left  ");
-
-
-
-
 newButton.appendChild(tb);
-
-upButton.appendChild(ub);
-
-
-
-/*Place the table and the button into the webpage */
-document.body.innerHTML = '<div id="mytable">Use Arrow keys to change cells </div><div id="mybutton"></div>'
-document.getElementById("mytable").appendChild(newTable);
 document.getElementById("mybutton").appendChild(newButton);
+
+var upButton  = document.createElement("button");
+var ub = document.createTextNode("up");
+upButton.appendChild(ub);
 document.getElementById("mybutton").appendChild(upButton);
 
-//UP key pressed
-// Code referenced @ https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Key_names_and_Char_values
-function shiftCell(side, vert){
+var downButton  = document.createElement("button");
+var db = document.createTextNode("down");
+downButton.appendChild(db);
+document.getElementById("mybutton").appendChild(downButton);
 
+var leftButton  = document.createElement("button");
+var lb = document.createTextNode("left");
+leftButton.appendChild(lb);
+document.getElementById("mybutton").appendChild(leftButton);
+
+
+var rightButton = document.createElement("button");
+var rb = document.createTextNode("right");
+rightButton.appendChild(rb);
+document.getElementById("mybutton").appendChild(rightButton);
+
+
+/*Move active cell and redraw border*/
+function shiftCell(side, vert){
             currentBox.style.border = "none";
             pos = pos + side ;
             r_pos = r_pos + vert;
@@ -73,70 +78,64 @@ function shiftCell(side, vert){
 
 
 }
+// Code referenced @ https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent#Key_names_and_Char_values
 
-
-
+/*Handle events*/
 function handler(){
-
-   var keyName = event.key;
-   console.log( event.key);
-    console.log("Is first child in row? ");
-    console.log( currentRow.firstChild == currentBox);
-  
-    if(keyName === 'ArrowUp'){
+   console.log("into hanler");
+  if(event.type === "keydown")
+        var keyName = event.key;
+    if(event.type === 'click'){
+        var keyName = event.currentTarget.childNodes["0"].data;
+    }
+    console.log("type complete");
+    if(keyName === 'ArrowUp'|| keyName === 'up'){
        if(currentRow.previousSibling.previousSibling != null){
             shiftCell( -4, -1); 
         }
     }
 
-
-    if(keyName === 'ArrowDown'){
+    if(keyName === 'ArrowDown'||keyName === 'down'){
        if(currentRow.nextSibling != null){
             shiftCell( 4, 1);          
         }
     }
     
-    if(keyName === 'ArrowRight'){
+    if(keyName === 'ArrowRight'||keyName=== 'right'){
        if(currentBox.nextSibling != null){
            shiftCell( 1, 0);
         }
     }
     
-    if(keyName === 'ArrowLeft'){
+    if(keyName === 'ArrowLeft'||keyName === 'left'){
        if(currentRow.firstChild != currentBox){
            shiftCell( -1, 0);
         }
     }
 
-    document.removeEventListener('keydown', handler);
-
+ 
 }
 
 
 
-document.addEventListener( 'keydown', handler, false);    
-
+/*Set up intial box*/
 var tableBox = document.querySelectorAll("td");
 var pos = 0;
 var r_pos = 1;
 var currentBox = tableBox[pos];
-currentBox.style.backgroundColor = 'blue';
 currentBox.style.border = "thick solid black";
-
 var tableRow = document.querySelectorAll("tr");
-
 var currentRow = tableRow[r_pos];
 
+/*Listen for keyboard arrow key*/
+document.addEventListener( 'keydown', handler, false);    
 
-
-
-//BOX OUT
-
-var button = document.querySelector("button");
-button.addEventListener("click", function(){currentBox.style.backgroundColor = 'yellow'});
-
-
-
+/*Listen for button clicked */
+newButton.addEventListener("click", function(){currentBox.style.backgroundColor = 'yellow'});
+upButton.addEventListener("click", handler, false);
+downButton.addEventListener("click", handler, false);
+leftButton.addEventListener("click", handler, false);
+rightButton.addEventListener("click", handler, false);
 
 
 
