@@ -1,0 +1,25 @@
+
+
+<!DOCTYPE html>
+  <html>
+    <head>
+      <script>
+
+        var req = new XMLHttpRequest;
+        req.open('POST', 'http://httpbin.org/post', false);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.send(JSON.stringify("This a test") );
+        console.log("this is response: " + req.responseText);
+        
+
+      </script>      
+    </head>
+    <body>
+    
+    
+    
+    
+    </body>
+
+
+  </html>
