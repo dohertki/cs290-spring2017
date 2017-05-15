@@ -14,15 +14,26 @@
           var city = document.getElementById('cityID').value;  
     //      var state =
           var req = new XMLHttpRequest();
-          req.open('GET','http://api.openweathermap.org/data/2.5/weather?q=' + city + ',or&appid=' + apiKey, false);
-      req.send(null);
-      var report = JSON.parse(req.responseText);
-      
-      var temp=   1.8 * (parseFloat(report.main.temp) - 273) +32;
+          req.open('GET','http://api.openweathermap.org/data/2.5/weather?q=' + city + ',or&appid=' + apiKey, true);
 
-      document.getElementById('weatherID').textContent = report.id;
-      document.getElementById('tempInfo').textContent = temp.toFixed(2);
-      console.log(report.id);
+    
+    //  req.setRequestHeader('Content-Type', 'application/json');
+      req.addEventListener('load',function(){
+      
+        var report = JSON.parse(req.responseText);
+      
+        var temp=   1.8 * (parseFloat(report.main.temp) - 273) +32;
+        var temphi=   1.8 * (parseFloat(report.main.temp_max) - 273) +32;
+        var templo=   1.8 * (parseFloat(report.main.temp_min) - 273) +32;
+        document.getElementById('cityInfo').textContent = report.name;
+        document.getElementById('humdityInfo').textContent = report.main.humidity;
+        document.getElementById('temphiInfo').textContent = temphi.toFixed(2);
+        document.getElementById('temploInfo').textContent = templo.toFixed(2);
+        document.getElementById('weatherID').textContent = report.id;
+        document.getElementById('tempInfo').textContent = temp.toFixed(2);
+        console.log(report.id);
+        });
+      req.send(null);
       event.preventDefault();
       })
       }    
@@ -37,8 +48,8 @@
   
     <form>
       <fieldset>
-        <legend>URL Shortener</legend>
-        <label for="longUrl"></label>
+        <legend>Open Weather Map</legend>
+        <label for="cityLabel">Enter City of Zipcode: </label>
         <input type="text" name="city" id="cityID">
         <input type="submit" id="zipSubmit">
       </fieldset>
@@ -46,8 +57,12 @@
     <div>
       <h2>Result</h2>
       <ul>
+        <li><span>City: </span><span id="cityInfo"></span></li>
         <li><span>Weather Id: </span><span id="weatherID"></span></li>
+        <li><span>Humidity: </span><span id="humdityInfo"></span></li>
         <li><span>Temperature: </span><span id="tempInfo"></span></li>
+        <li><span>Temperature(high): </span><span id="temphiInfo"></span></li>
+        <li><span>Temperature(low): </span><span id="temploInfo"></span></li>
       </ul>
     </div>
   

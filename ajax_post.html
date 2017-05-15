@@ -1,25 +1,53 @@
 
 
-<!DOCTYPE html>
+ <!DOCTYPE html>
   <html>
     <head>
-      <script>
-
-        var req = new XMLHttpRequest;
-        req.open('POST', 'http://httpbin.org/post', false);
-        req.setRequestHeader('Content-Type', 'application/json');
-        req.send(JSON.stringify("This a test") );
-        console.log("this is response: " + req.responseText);
-        
-
-      </script>      
     </head>
     <body>
+      <form>
+        <fieldset>
+          <legend>httpbin.org</legend>
+          <label for="sendText">Send Text:</label>
+          <input type="text" name="sendHttpbin" id="sendHttpbin">
+          <input type="submit" id="textSubmit">
+        </fieldset>
+      </form>
     
-    
-    
+      <div>
+        <h2>Result</h2>
+        <p><span>Response: </span><span id="repeatID"></span></p>
+      </div>
     
     </body>
 
+      <script> 
+    
+
+        document.getElementById('textSubmit').addEventListener('click', function(event){
+
+        var payload ={ 
+            dat: null
+            };
+        payload.dat = document.getElementById('sendHttpbin').value; 
+     
+        message = "this is Test";
+        var req = new XMLHttpRequest;
+        req.open('POST', 'http://httpbin.org/post', true);
+        req.setRequestHeader('Content-Type', 'application/json');
+        req.addEventListener('load',function(){
+
+            console.log("this is response: " + req.responseText);
+            var report = JSON.parse(req.responseText);
+            var response = JSON.parse(report.data);
+            console.log("this is response: " + response.dat);
+            document.getElementById('repeatID').textContent = response.dat;
+  
+            });        
+        req.send(JSON.stringify(payload));
+        event.preventDefault();
+        
+        });
+      </script>      
 
   </html>
