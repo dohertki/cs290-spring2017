@@ -1,0 +1,30 @@
+<h1>This is row</h1>
+
+<ul>
+	{{#each results}}
+		<li>{{this.reps}}</li>
+		<li>{{this.name}}</li>
+	{{/each}}
+	
+</ul>		
+
+<table>
+	<thead> 
+		<tr>
+		{{#each cols}}
+        	<th>{{this.column_name}}</th> 
+       	{{/each}}
+		</tr>   
+    </thead> 
+    <tbody> 
+        {{#each results}} 
+        <tr> 
+            <td>{{this.name}}</td> 
+            <td>{{this.reps}}</td> 
+			<td>{{this.weight}}</td> 
+            <td>{{this.date}}</td> 
+			<td>{{this.lbs}}</td>      
+        </tr> 
+        {{/each}} 
+    </tbody> 
+</table> 
