@@ -2,6 +2,9 @@
   Kierin Doherty(dohertki)
   CS290-week 5   
   7 Apr 2017
+
+  Works in chrome and ie browser. Does not work in firefox because
+  event objects are not treated as global in scope. 
 */
 
 /*Create a <div> for the table and a <div> for the buttons in the <body>*/

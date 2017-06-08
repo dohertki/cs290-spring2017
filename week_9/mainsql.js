@@ -72,9 +72,30 @@ app.get('/',function(req,res,next){
 	});
 });	
 
+app.get('/test_case', function(req,res){
+
+
+  switch(client_request){
+    case "insert_row":
+      break;
+    case "delete_row":
+      break;
+    case "edit_row":
+      break;
+    default:
+      /*load page*/
+      break;
+       
+
+  }
+
+//  res.render('new_row');
+});
+
 app.get('/handle', function(req,res){
   res.render('new_row');
 });
+
 
 app.get('/pling',function(req,res){
 
