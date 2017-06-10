@@ -47,8 +47,7 @@ app.get('/reset-table',function(req,res,next){
 
       res.render('home',context);
 
-      res.send('home',context);
-
+     
     })
   });
 });
