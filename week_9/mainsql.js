@@ -11,7 +11,8 @@ app.engine('handlebars', handlebars.engine);
 app.set('view engine', 'handlebars');
 
 var mysql = require('mysql');
-var pool = mysql.createPool({
+
+var pool_home = mysql.createPool({
     connectionLimit: 10,
     host           : 'localhost',
     user           : 'student',
@@ -19,9 +20,16 @@ var pool = mysql.createPool({
     database       : 'student'
 });
 
+var pool = mysql.createPool({
+    connectionLimit: 10,
+    host           : 'classmysql.engr.oregonstate.edu',
+    user           : 'cs290_dohertki',
+    password       :  '0248',
+    database       : 'cs290_dohertki'
+});
 
 
-app.set('port',3000);
+app.set('port',2800);
 app.use(express.static(__dirname + '/public'));
 
 app.get('/reset-table',function(req,res,next){
@@ -36,7 +44,11 @@ app.get('/reset-table',function(req,res,next){
     "lbs BOOLEAN)";
      pool.query(createString, function(err){
       context.results = "Table reset";
+
       res.render('home',context);
+
+      res.send('home',context);
+
     })
   });
 });
