@@ -22,7 +22,7 @@ var pool = mysql.createPool({
 
 
 app.set('port',3000);
-
+app.use(express.static(__dirname + '/public'));
 
 app.get('/reset-table',function(req,res,next){
   var context = {};
@@ -67,10 +67,37 @@ app.get('/',function(req,res,next){
 		}
 		
     content.results = rows;
-
+    
 		res.render('new_row',content);
 	});
 });	
+
+
+
+/*Code below is referenced for class POST example*/
+app.post('/test-post', function(req,res){
+  var qParams = [];
+  for (var p in req.body){
+    qParams.push({'name':p,'value':req.body[p]})
+  }
+  var context = {};
+  context.request = "POST";
+  context.dataList = qParams;
+  res.render('display_table', context);
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.get('/test_case', function(req,res){
 

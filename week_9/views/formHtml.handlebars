@@ -1,5 +1,4 @@
 
-
 <div>
 <form id='workout_form' action="http://localhost:3000/test-post/" method="POST">
 	<fieldset>
@@ -11,34 +10,4 @@
 	<input id="submitWorkout" type="submit" value="Submit" />
 	</fieldset>
 </form>
-</div>
-<h1>This is row</h1>
-<br>
-<div>
-
-
-
-<table>
-	<thead> 
-		<tr>
-		{{#each cols}}
-        	<th>{{this.column_name}}</th> 
-       	{{/each}}
-		</tr>   
-    </thead> 
-    <tbody> 
-        {{#each results}} 
-        <tr> 
-            <td>{{this.name}}</td> 
-            <td>{{this.reps}}</td> 
-			<td>{{this.weight}}</td> 
-            <td>{{this.date}}</td> 
-			<td>{{this.lbs}}</td>      
-        	<td><button class"edit_btn">edit</button></td>      
-      		<td><button class"delete_btn">delete</button></td>   
-		
-		</tr> 
-        {{/each}} 
-    </tbody> 
-</table> 
 </div>
