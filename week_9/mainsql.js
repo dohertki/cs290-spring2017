@@ -74,56 +74,55 @@ app.get('/',function(req,res,next){
 
 /*Code below is referenced for class POST example*/
 app.post('/data', function(req,res,next){
-  var qParams = [];
- // for (var p in req.body){
- //   qParams.push({'name':p,'value':req.body[p]})
-  //}
   var context = {};
   context.request = "POST";
  console.log(context.request);
- if(req.body){
-  
-		switch(req.body.call){
-			case "input":
+ 
 	    	pool.query('INSERT INTO workouts (`name`,`reps`,`weight`,`date`,`lbs`) VALUES (?,?,?,?,?)',
     		[req.body['name'], req.body['reps'], req.body['weight'], req.body['date'], req.body['lbs']], function(err, result){
     		if(err){
       			next(err);
       			return;
     		}
-    		//context.results = "Inserted id " + result.insertId;
+    //>>>> FIXME 		query server for id
+			//context.results = "Inserted id " + result.insertId;
     		//res.render('home',context);
+			
       		});
-      		console.log("new input");
-      		break;
-			case "delete":
-   //    	var context = {};
-       	  pool.query("DELETE FROM workouts WHERE id=?", [req.body.id], function(err, result){
-        		if(err){
-          			next(err);
-          			return;
-        		}
-        	//	context.results = "Deleted " + result.changedRows + " rows.";
-        	//	res.render('home',context);
-      	}); 
-				console.log("delete row");   
-      	break;
-    case "edit":
-      break;
-    default:
-      /*load page*/
-      break;
+      		
+			  
+next();			 
+}, function(req,res){			  
+	var context = {};
+	pool.query('SELECT id FROM workouts ORDER BY id DESC LIMIT 1', function(err, rows, fields) {
+	if(err){
+		console.log("error");
+		next(err);
+		return;
+	}
+	context.results = rows[0];
+	
+	console.log(context.results);	
+	res.send(JSON.stringify(context));
+	console.log("new input");
+//	res.end();
+	//res.json({ user: 'tobi' });
+	 });	
 
-  }
+
+
+})    	  
+			  
+			  
+			  
+			 
+        //	console.log(pool.query('SELECT id FROM workouts ORDER BY id DESC LIMIT 1' ));
+			//	context.results = "Deleted " + result.changedRows + " rows.";
+        	//	res.render('home',context);   
+ 
+  /*close if(req.body)*/  
 
  
- }; /*close if(req.body)*/  
-});
- 
-
-
-
-
 
 
 app.get('/insert',function(req,res,next){
@@ -148,50 +147,25 @@ app.post('/delete', function(req,res,next){
     	next(err);
     return;
         		}
-  var context = {};
+ // var context = {};
   //mysql.pool.query("DELETE FROM todo WHERE id=?", [req.query.id], function(err, result){
   //  if(err){
   //    next(err);
   //    return;
   //  }
-    context.results = "Deleted " + result.changedRows + " rows.";
-    res.render('home',context);
+   // context.results = "Deleted " + result.changedRows + " rows.";
+   // res.render('home',context);
   });
 });
 
 
-
-
-app.get('/test_case', function(req,res){
-
-
-
-
-//  res.render('new_row');
-});
-
-app.get('/handle', function(req,res){
-  res.render('new_row');
-});
-
-
 app.get('/pling',function(req,res){
-
-  
   res.type('text/plain');
   res.send('Welcome to the Jungle!');
 });
-/*copied directly from get post assignment needs a fixing*/
-app.post('/forms', function(req,res){
-  var qParams = [];
-  for (var p in req.body){
-    qParams.push({'name':p,'value':req.body[p]})
-  }
-  var context = {};
-  context.request = "POST";
-  context.dataList = qParams;
-  res.render('display_table', context);
-});
+
+
+
 
 
 
@@ -240,14 +214,14 @@ app.get('/simple-update',function(req,res,next){
 ///safe-update?id=1&name=The+Task&done=false
 app.get('/safe-update',function(req,res,next){
   var context = {};
-  mysql.pool.query("SELECT * FROM todo WHERE id=?", [req.query.id], function(err, result){
+  pool.query("SELECT * FROM todo WHERE id=?", [req.query.id], function(err, result){
     if(err){
       next(err);
       return;
     }
     if(result.length == 1){
       var curVals = result[0];
-      mysql.pool.query("UPDATE todo SET name=?, done=?, due=? WHERE id=? ",
+      pool.query("UPDATE todo SET name=?, done=?, due=? WHERE id=? ",
         [req.query.name || curVals.name, req.query.done || curVals.done, req.query.due || curVals.due, req.query.id],
         function(err, result){
         if(err){
@@ -261,6 +235,10 @@ app.get('/safe-update',function(req,res,next){
   });
 });
 
+app.get('/pling',function(req,res){
+  res.type('text/plain');
+  res.send('Welcome to the Jungle!');
+});
 
 /*
 app.get('/delete',function(req,res,next){
