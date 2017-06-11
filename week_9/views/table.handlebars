@@ -5,12 +5,10 @@
 <table>
 	<thead> 
 		<tr>
-        	<th>id</th> 
-        	<th>name</th> 
-        	<th>reps</th> 
-        	<th>weight</th> 
-        	<th>date</th> 
-        	<th>lbs</th> 
+        	
+		{{#each cols}}
+        	<th>{{this.column_name}}</th> 
+       	{{/each}}
 		</tr>   
     </thead> 
     <tbody> 
