@@ -2,8 +2,25 @@ var express = require('express');
 var app = express();
 
 var handlebars = require('express-handlebars').create({defaultLayout:'main'});
-
+var exphbs  = require('express-handlebars');
 var bodyParser = require('body-parser');
+/*
+var hbs = exphbs.create({
+  // Specify helpers which are only registered on this instance.
+  helpers: {
+    formatTime: function (date, format) {
+    var mmnt = moment(date);
+    return mmnt.format(format);
+ 	}
+  }
+});
+*/
+
+//handlebars.registerHelper('formatTime', function (date, format) {
+//    var mmnt = moment(date);
+//    return mmnt.format(format);
+// });
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -45,7 +62,7 @@ app.get('/reset-table',function(req,res,next){
      pool.query(createString, function(err){
       context.results = "Table reset";
 
-      res.render('home',context);
+      res.render('new_row',context);
 
      
     })
@@ -67,6 +84,9 @@ app.get('/',function(req,res,next){
     content.results = rows;
     
 		res.render('new_row',content);
+
+
+
 	});
 });	
 
@@ -74,53 +94,62 @@ app.get('/',function(req,res,next){
 
 /*Code below is referenced for class POST example*/
 app.post('/data', function(req,res,next){
-  var context = {};
-  context.request = "POST";
- console.log(context.request);
+	var context = {};
+	console.log("insert data");
  
-	    	pool.query('INSERT INTO workouts (`name`,`reps`,`weight`,`date`,`lbs`) VALUES (?,?,?,?,?)',
-    		[req.body['name'], req.body['reps'], req.body['weight'], req.body['date'], req.body['lbs']], function(err, result){
+	pool.query('INSERT INTO workouts (`name`,`reps`,`weight`,`date`,`lbs`) VALUES (?,?,?,?,?)',
+    [req.body['name'], req.body['reps'], req.body['weight'], req.body['date'], req.body['lbs']], function(err, result){
     		if(err){
       			next(err);
       			return;
-    		}
-    //>>>> FIXME 		query server for id
-			//context.results = "Inserted id " + result.insertId;
-    		//res.render('home',context);
-			
-      		});
-      		
-			  
-next();			 
-}, function(req,res){			  
-	var context = {};
-	pool.query('SELECT id FROM workouts ORDER BY id DESC LIMIT 1', function(err, rows, fields) {
-	if(err){
-		console.log("error");
-		next(err);
-		return;
-	}
-	context.results = rows[0];
+    		}		
+	});
+      		  
+	next();			 
+	}, function(req,res){			  
+		var context = {};
+		pool.query('SELECT id FROM workouts ORDER BY id DESC LIMIT 1', function(err, rows, fields) {
+			if(err){
+				console.log("error");
+				next(err);
+				return;
+			}
+		context.results = rows[0];
 	
-	console.log(context.results);	
-	res.send(JSON.stringify(context));
-	console.log("new input");
-//	res.end();
-	//res.json({ user: 'tobi' });
-	 });	
+		console.log(context.results);	
+		res.send(JSON.stringify(context));
+		console.log("new input");
 
-
-
-})    	  
+	 	});	
+});   	  
 			  
 			  
-			  
-			 
-        //	console.log(pool.query('SELECT id FROM workouts ORDER BY id DESC LIMIT 1' ));
-			//	context.results = "Deleted " + result.changedRows + " rows.";
-        	//	res.render('home',context);   
- 
-  /*close if(req.body)*/  
+app.post('/update',function(req,res,next){
+	var context = {};
+	console.log("update " + req.body.id);
+  	pool.query("SELECT * FROM workouts WHERE id=?", [req.body.id], function(err, result){
+    	if(err){
+			console.log("sql error");
+      		next(err);
+      		return;
+    	}
+    	if(result.length == 1){
+      		var curVals = result[0];
+      		pool.query("UPDATE workouts SET name=?, reps=?, weight=?, date=?, lbs=? WHERE id=? ",
+        		[req.body.name, req.body.reps, req.body.weight, req.body.date, req.body.lbs, req.body.id],
+        	function(err, result){
+        		if(err){
+          			next(err);
+          		return;
+        }
+        context.results = "Updated " + result.changedRows + " rows.";
+        
+		res.end();
+      });
+    }
+  });
+});			  
+
 
  
 
@@ -146,28 +175,18 @@ app.post('/delete', function(req,res,next){
     if(err){
     	next(err);
     return;
-        		}
- // var context = {};
-  //mysql.pool.query("DELETE FROM todo WHERE id=?", [req.query.id], function(err, result){
-  //  if(err){
-  //    next(err);
-  //    return;
-  //  }
-   // context.results = "Deleted " + result.changedRows + " rows.";
-   // res.render('home',context);
+    }
+ 
+    res.end();
   });
 });
 
 
-app.get('/pling',function(req,res){
+
+app.get('/ping',function(req,res){
   res.type('text/plain');
   res.send('Welcome to the Jungle!');
 });
-
-
-
-
-
 
 
 
@@ -177,12 +196,14 @@ app.use(function(req,res){
   res.send('404 - Not Found');
 });
 
+
 app.use(function(err, req, res, next){
   console.error(err.stack);
   res.type('plain/text');
   res.status(500);
   res.send('500 - Server Error');
 });
+
 
 app.listen(app.get('port'), function(){
   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
@@ -195,61 +216,3 @@ app.listen(app.get('port'), function(){
 
 
 
-
-///simple-update?id=2&name=The+Task&done=false&due=2015-12-5
-app.get('/simple-update',function(req,res,next){
-  var context = {};
-  mysql.pool.query("UPDATE todo SET name=?, done=?, due=? WHERE id=? ",
-    [req.query.name, req.query.done, req.query.due, req.query.id],
-    function(err, result){
-    if(err){
-      next(err);
-      return;
-    }
-    context.results = "Updated " + result.changedRows + " rows.";
-    res.render('home',context);
-  });
-});
-
-///safe-update?id=1&name=The+Task&done=false
-app.get('/safe-update',function(req,res,next){
-  var context = {};
-  pool.query("SELECT * FROM todo WHERE id=?", [req.query.id], function(err, result){
-    if(err){
-      next(err);
-      return;
-    }
-    if(result.length == 1){
-      var curVals = result[0];
-      pool.query("UPDATE todo SET name=?, done=?, due=? WHERE id=? ",
-        [req.query.name || curVals.name, req.query.done || curVals.done, req.query.due || curVals.due, req.query.id],
-        function(err, result){
-        if(err){
-          next(err);
-          return;
-        }
-        context.results = "Updated " + result.changedRows + " rows.";
-        res.render('home',context);
-      });
-    }
-  });
-});
-
-app.get('/pling',function(req,res){
-  res.type('text/plain');
-  res.send('Welcome to the Jungle!');
-});
-
-/*
-app.get('/delete',function(req,res,next){
-  var context = {};
-  mysql.pool.query("DELETE FROM todo WHERE id=?", [req.query.id], function(err, result){
-    if(err){
-      next(err);
-      return;
-    }
-    context.results = "Deleted " + result.changedRows + " rows.";
-    res.render('home',context);
-  });
-});
-*/
