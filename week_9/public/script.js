@@ -1,7 +1,6 @@
 //script.js
 
 
-
 /*Wait till document is loaded before continue*/
 document.addEventListener('DOMContentLoaded', bindButtons);
 
